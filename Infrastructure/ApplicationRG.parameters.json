@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "dscBlobStorageUri": {
+            "value": ""
+        },
+        "azureDevOpsToken": {
+            "value": ""
+        },
+        "vmname": {
+            "value": ""
+        },
+        "username": {
+            "value": ""
+        },
+        "password": {
+            "value": ""
+        },
+        "azureDevOpsEnvironmentName": {
+            "value": ""
+        },
+        "azureDevOpsProject": {
+            "value": ""
+        },
+        "azureDevOpsUrl": {
+            "value": ""
+        }
+    }
+}
