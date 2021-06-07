@@ -75,7 +75,7 @@ stages:
   - stage: PrepareDevResourceGroup
     dependsOn: PrepareDesiredStateConfiguration
     variables:
-      group: DevSecOps-Library
+      group: ITS-DevOpsOnPremToTheCloud-Library
     jobs:
     - job: BuildResourceGroup     
       steps:
