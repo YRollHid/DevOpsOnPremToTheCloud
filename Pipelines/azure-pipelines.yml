@@ -18,7 +18,6 @@ pool:
 
 # Setting some variables within the pipeline.
 variables:
-  group: DevSecOps-Library
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
@@ -69,12 +68,15 @@ stages:
             azureSubscription: 'DevOpsOnPremToTheCloudSc'
             ScriptType: 'FilePath'
             ScriptPath: 'Infrastructure/taskBuildDsc.ps1'
+            ScriptArguments: '-ResourceGroupName $(MGMTRESOURCEGROUP) -StorageAccountName $(STORAGEACCOUNTNAME) -ContainerName $(STORAGECONTAINERNAME)'
             azurePowerShellVersion: 'LatestVersion'
 
   # Build and prepare the resource group
   # This is the Azure Resource Group where our infrastructure will be deployed.
   - stage: PrepareDevResourceGroup
     dependsOn: PrepareDesiredStateConfiguration
+    variables:
+      group: DevSecOps-Library
     jobs:
     - job: BuildResourceGroup     
       steps:
