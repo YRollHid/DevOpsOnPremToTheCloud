@@ -7,7 +7,7 @@
 trigger:
   branches:
     include:
-      - episode_5
+      - main
   paths:
     exclude:
       - .github
