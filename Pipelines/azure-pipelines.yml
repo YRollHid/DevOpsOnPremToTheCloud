@@ -18,6 +18,7 @@ pool:
 
 # Setting some variables within the pipeline.
 variables:
+  group: DevSecOps-Library
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
@@ -74,8 +75,6 @@ stages:
   # This is the Azure Resource Group where our infrastructure will be deployed.
   - stage: PrepareDevResourceGroup
     dependsOn: PrepareDesiredStateConfiguration
-    variables:
-     group: DevSecOps-Library
     jobs:
     - job: BuildResourceGroup     
       steps:
