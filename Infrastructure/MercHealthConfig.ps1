@@ -1,5 +1,10 @@
 Configuration MercuryHealthBase {
     Node localhost {
+        # Configure the LCM
+        LocalConfigurationManager
+        {
+        ConfigurationMode = "ApplyAndAutoCorrect"
+        }
         WindowsFeature FileAndStorage-Services {
             Name   = 'FileAndStorage-Services'
             Ensure = 'Present'
@@ -305,6 +310,11 @@ Configuration MercuryHealthAgent {
     Import-DscResource -ModuleName xPSDesiredStateConfiguration -ModuleVersion 9.1.0
 
     node localhost {
+        # Configure the LCM
+        LocalConfigurationManager
+        {
+        ConfigurationMode = "ApplyAndAutoCorrect"
+        }
         File AzAgentDirectory {
             DestinationPath = $AzAgentDirectory
             Type            = 'Directory'
@@ -393,6 +403,11 @@ Configuration MercuryHealthWeb {
     Import-DscResource -ModuleName xPSDesiredStateConfiguration -ModuleVersion 9.1.0
 
     Node localhost {
+        # Configure the LCM
+        LocalConfigurationManager
+        {
+        ConfigurationMode = "ApplyAndAutoCorrect"
+        }
         MercuryHealthBase BaseConfig {
         }
 
