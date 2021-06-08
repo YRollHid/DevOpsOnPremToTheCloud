@@ -124,6 +124,20 @@
                             "sourceAddressPrefix": "*",
                             "destinationAddressPrefix": "*"
                         }
+                    },
+                    {
+                        "name": "RdpRule",
+                        "properties": {
+                            "description": "Allow RDP Traffic",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "3389",
+                            "access": "Allow",
+                            "priority": 110,
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*"
+                        }
                     }
                 ]
             }
