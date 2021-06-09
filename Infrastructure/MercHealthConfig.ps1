@@ -447,7 +447,7 @@ Configuration MercuryHealthWeb {
             AzureDevOpsUrl             = $AzureDevOpsUrl
             AzureDevOpsEnvironmentName = $AzureDevOpsEnvironmentName
             AgentCredential            = $AppPoolCredential
-            DependsOn                  = "[MercuryHealthBase]BaseConfig"
+            DependsOn                  = "[MercuryHealthBase]BaseConfig", "[initDataDisk]"
         }
 
         File WebsiteDirectory {
