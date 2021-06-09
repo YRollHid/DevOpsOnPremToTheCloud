@@ -295,9 +295,10 @@ Configuration MercuryHealthBase {
     }
 }
 
-Configuration DataDisk
+Configuration Disk_InitializeDataDisk
 {
-    Import-DSCResource -ModuleName xStorage
+    Import-DSCResource -ModuleName StorageDsc -ModuleVersion 5.0.1
+
     Node localhost
     {
         # Configure the LCM
@@ -305,19 +306,24 @@ Configuration DataDisk
         {
         ConfigurationMode = "ApplyAndAutoCorrect"
         }
-        xWaitforDisk Disk2
+        
+        WaitForDisk Disk2
         {
-            DiskNumber = 2
-            RetryIntervalSec = 60
-            Count = 60
+             DiskId = 2
+             RetryIntervalSec = 60
+             RetryCount = 60
         }
-    xDisk FVolume
-    {
-        DiskNumber = 2
-        DriveLetter = 'F'
-        FSLabel = 'DataDisk'
+
+        Disk FVolume
+        {
+             DiskId = 2
+             DriveLetter = 'F'
+             Size = 50GB
+             DependsOn = '[WaitForDisk]Disk2'
+        }
     }
 }
+
 
 Configuration MercuryHealthAgent {
     param (
