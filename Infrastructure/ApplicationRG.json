@@ -21,6 +21,18 @@
                 "description": "Azure DevOps Token for registering the vm to the deployment environment."
             }
         },
+        "myWorkSpaceId": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Azure Log Analytics WorkSpaceId."
+            }
+        },
+        "myWorkspaceKey": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Azure Log Analytics WorkspaceKey."
+            }
+        },
         "vmname": {
             "type": "string",
             "metadata": {
@@ -303,6 +315,27 @@
                         "AzureDevOpsProject": "[parameters('azureDevOpsProject')]",
                         "AzureDevOpsEnvironmentName": "[parameters('azureDevOpsEnvironmentName')]"
                     }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "OMSExtension",
+            "apiVersion": "2015-06-15",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('vmname'))]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.EnterpriseCloud.Monitoring",
+                "type": "MicrosoftMonitoringAgent",
+                "typeHandlerVersion": "1.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "workspaceId": "[parameters('myWorkSpaceId')]"
+                },
+                "protectedSettings": {
+                    "workspaceKey": "[parameters('myWorkspaceKey')]"
                 }
             }
         }
