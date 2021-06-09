@@ -320,7 +320,7 @@
         },
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "OMSExtension",
+            "name": "[concat(parameters('vmname'),'/OMSExtension')]",
             "apiVersion": "2018-06-01",
             "location": "[parameters('location')]",
             "dependsOn": [
