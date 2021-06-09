@@ -295,8 +295,7 @@ Configuration MercuryHealthBase {
     }
 }
 
-Configuration Disk_InitializeDataDisk
-{
+Configuration initDataDisk {
     Import-DSCResource -ModuleName StorageDsc -ModuleVersion 5.0.1
 
     Node localhost
@@ -318,7 +317,8 @@ Configuration Disk_InitializeDataDisk
         {
              DiskId = 2
              DriveLetter = 'F'
-             Size = 50GB
+             FSLabel = 'DataDisk'
+             FSFormat = 'NTFS'
              DependsOn = '[WaitForDisk]Disk2'
         }
     }
