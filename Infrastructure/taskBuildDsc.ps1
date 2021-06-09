@@ -8,6 +8,10 @@ Write-Host ""; Write-Host 'Getting the xPSDesiredStateConfiguration module to pa
 if (-not (Get-Module -ListAvailable xPSDesiredStateConfiguration)) {
     Install-Module xPSDesiredStateConfiguration -RequiredVersion 9.1.0 -Scope CurrentUser -Force
 }
+Write-Host ""; Write-Host 'Getting the xStorage module to package as part of the published DSC configuration.'
+if (-not (Get-Module -ListAvailable xStorage)) {
+    Install-Module xStorage -RequiredVersion 3.4.0.0 -Scope CurrentUser -Force
+}
 Write-Host ""; Write-Host 'Packaging and publishing the DSC configuration and supporting modules.'
 $Parameters = @{
     ResourceGroupName  = ${env:MGMTRESOURCEGROUP}

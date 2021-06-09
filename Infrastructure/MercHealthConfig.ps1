@@ -295,6 +295,30 @@ Configuration MercuryHealthBase {
     }
 }
 
+Configuration DataDisk
+{
+    Import-DSCResource -ModuleName xStorage
+    Node localhost
+    {
+        # Configure the LCM
+        LocalConfigurationManager
+        {
+        ConfigurationMode = "ApplyAndAutoCorrect"
+        }
+        xWaitforDisk Disk2
+        {
+            DiskNumber = 2
+            RetryIntervalSec = 60
+            Count = 60
+        }
+    xDisk FVolume
+    {
+        DiskNumber = 2
+        DriveLetter = 'F'
+        FSLabel = 'DataDisk'
+    }
+}
+
 Configuration MercuryHealthAgent {
     param (
         [string] $AzAgentDirectory = 'C:\azagent',
@@ -421,7 +445,7 @@ Configuration MercuryHealthWeb {
         }
 
         File WebsiteDirectory {
-            DestinationPath = 'C:\MercuryHealth'
+            DestinationPath = 'F:\MercuryHealth'
             Type            = 'Directory'
         }
 
@@ -450,7 +474,7 @@ Configuration MercuryHealthWeb {
             State           = 'Started'
             ServerAutoStart = $true
             ApplicationPool = 'MercuryHealth'
-            PhysicalPath    = 'C:\MercuryHealth'
+            PhysicalPath    = 'F:\MercuryHealth'
             DependsOn       = "[xWebsite]RemoveDefaultWebsite", "[xWebAppPool]MercHealthPool", "[MercuryHealthAgent]AgentInstall"
         }
     }
