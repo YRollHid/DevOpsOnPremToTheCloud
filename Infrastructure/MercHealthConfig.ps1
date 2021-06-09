@@ -295,36 +295,6 @@ Configuration MercuryHealthBase {
     }
 }
 
-Configuration initDataDisk {
-    Import-DSCResource -ModuleName StorageDsc -ModuleVersion 5.0.1
-
-    Node localhost
-    {
-        # Configure the LCM
-        LocalConfigurationManager
-        {
-        ConfigurationMode = "ApplyAndAutoCorrect"
-        }
-        
-        WaitForDisk Disk2
-        {
-             DiskId = 2
-             RetryIntervalSec = 60
-             RetryCount = 60
-        }
-
-        Disk FVolume
-        {
-             DiskId = 2
-             DriveLetter = 'F'
-             FSLabel = 'DataDisk'
-             FSFormat = 'NTFS'
-             DependsOn = '[WaitForDisk]Disk2'
-        }
-    }
-}
-
-
 Configuration MercuryHealthAgent {
     param (
         [string] $AzAgentDirectory = 'C:\azagent',
@@ -431,6 +401,7 @@ Configuration MercuryHealthWeb {
 
     Import-DscResource -ModuleName xWebAdministration -ModuleVersion 3.2.0
     Import-DscResource -ModuleName xPSDesiredStateConfiguration -ModuleVersion 9.1.0
+    Import-DSCResource -ModuleName StorageDsc -ModuleVersion 5.0.1
 
     Node localhost {
         # Configure the LCM
@@ -447,7 +418,23 @@ Configuration MercuryHealthWeb {
             AzureDevOpsUrl             = $AzureDevOpsUrl
             AzureDevOpsEnvironmentName = $AzureDevOpsEnvironmentName
             AgentCredential            = $AppPoolCredential
-            DependsOn                  = "[MercuryHealthBase]BaseConfig", "[initDataDisk]"
+            DependsOn                  = "[MercuryHealthBase]BaseConfig"
+        }
+
+        WaitForDisk Disk2
+        {
+             DiskId = 2
+             RetryIntervalSec = 60
+             RetryCount = 60
+        }
+
+        Disk FVolume
+        {
+             DiskId = 2
+             DriveLetter = 'F'
+             FSLabel = 'DataDisk'
+             FSFormat = 'NTFS'
+             DependsOn = '[WaitForDisk]Disk2'
         }
 
         File WebsiteDirectory {
